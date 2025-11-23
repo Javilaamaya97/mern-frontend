@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { getTasks, createTask, updateTask, deleteTask } from "./api";
+import "./styles.css";//
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState({ title: "", description: "" });
 
-  // Traer todas las tareas al cargar
   useEffect(() => {
     refreshTasks();
   }, []);
@@ -36,10 +36,10 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="app-container">
       <h1>Lista de Tareas</h1>
 
-      <div>
+      <div className="form-container">
         <input
           type="text"
           placeholder="Título"
@@ -54,15 +54,21 @@ function App() {
             setNewTask({ ...newTask, description: e.target.value })
           }
         />
-        <button onClick={handleCreate}>Agregar Tarea</button>
+        <button className="add-btn" onClick={handleCreate}> ➕ Agregar Tarea</button>
       </div>
 
-      <ul>
+      <ul className="task-list">
         {tasks.map((t) => (
-          <li key={t.id}>
-            <strong>{t.title}</strong>: {t.description}{" "}
-            <button onClick={() => handleUpdate(t.id)}>Editar</button>
-            <button onClick={() => handleDelete(t.id)}>Eliminar</button>
+          <li key={t.id} className="task-card">
+            <div className="task-info">
+              <span className="task-title">{t.title}</span>
+              <span className="task-desc">{t.description}</span>
+            </div>
+
+            <div className="task-buttons">
+              <button className="btn-edit" onClick={() => handleUpdate(t.id)}> ✏️</button>
+              <button className="btn-delete" onClick={() => handleDelete(t.id)}> 🗑️</button>
+            </div>
           </li>
         ))}
       </ul>
